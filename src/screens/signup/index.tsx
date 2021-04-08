@@ -68,14 +68,11 @@ export function SignUp() {
 
     setIsLoading(false)
 
-    console.log(resp.mensagem)
-
     Snackbar.show({
       text: resp.mensagem == null && resp.sucesso ? 'Cadastro realizado com sucesso' : resp.mensagem
     })
 
     if (resp.sucesso) {
-      console.log('sucesso')
       navigation.goBack()
     }
   }

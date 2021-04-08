@@ -46,10 +46,8 @@ export function Login() {
     setIsLoading(false)
 
     if (resp.sucesso) {
-      console.log(resp)
       setToken(String(resp.corpo.codigo))
     } else {
-      console.log(resp.mensagem)
       Snackbar.show({
         text: resp.mensagem
       })
