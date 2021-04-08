@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   input: {
-    width: '90%',
+    width: '100%',
     borderRadius: 50,
     marginBottom: 20,
   },

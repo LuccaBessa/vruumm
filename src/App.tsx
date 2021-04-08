@@ -7,6 +7,7 @@ import 'react-native-gesture-handler';
 import { Routes } from './Routes'
 import { ThemeContext } from './Context/theme';
 import { default as customTheme } from '../custom-theme.json'
+import { ContextProvider } from './Context'
 
 const App = () => {
   const [theme, setTheme] = React.useState({ ...eva.light, ...customTheme });
@@ -21,7 +22,9 @@ const App = () => {
       <IconRegistry icons={EvaIconsPack} />
       <ThemeContext.Provider value={{ theme, toggleTheme }}>
         <ApplicationProvider {...eva} theme={theme}>
-          <Routes />
+          <ContextProvider>
+            <Routes />
+          </ContextProvider>
         </ApplicationProvider>
       </ThemeContext.Provider>
     </SafeAreaView>

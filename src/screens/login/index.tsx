@@ -1,33 +1,22 @@
 import React, { useState } from 'react'
-import { Image, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, View } from 'react-native'
-import { Button, Icon, Input, Layout } from '@ui-kitten/components'
+import { ActivityIndicator, Image, View } from 'react-native'
+import { Button, Input, Layout } from '@ui-kitten/components'
 import { styles } from './styles'
 import { useNavigation } from '@react-navigation/core'
 import { login } from '../../api/login'
 import Snackbar from 'react-native-snackbar'
 import { Text } from 'react-native'
+import { PasswordInput } from '../../components/PasswordInput'
+import { useTokenContext } from '../../Context/token'
 
 export function Login() {
   const [email, setEmail] = useState<string>('')
   const [emailCaption, setEmailCaption] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [passwordCaption, setPasswordCaption] = useState<string>('')
-  const [secureTextEntry, setSecureTextEntry] = React.useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const navigation = useNavigation()
-
-  const toggleSecureEntry = () => {
-    setSecureTextEntry(!secureTextEntry);
-  };
-
-  const renderIcon = (props: any) => (
-    <TouchableWithoutFeedback onPress={toggleSecureEntry}>
-      <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'} />
-    </TouchableWithoutFeedback>
-  );
-
-  const AlertIcon = (props: any) => (
-    <Icon {...props} name='alert-circle-outline' />
-  );
+  const { setToken } = useTokenContext()
 
   const onClickLogin = async () => {
     let flag: boolean = false
@@ -35,21 +24,30 @@ export function Login() {
     if (email == "") {
       setEmailCaption("Campo Obrigatório")
       flag = true
+    } else {
+      setEmailCaption("")
     }
 
     if (password == "") {
       setPasswordCaption("Campo Obrigatório")
       flag = true
+    } else {
+      setPasswordCaption("")
     }
 
     if (flag) {
       return
     }
 
+    setIsLoading(true)
+
     let resp = await login(email, password)
 
+    setIsLoading(false)
+
     if (resp.sucesso) {
-      console.log('sucesso')
+      console.log(resp)
+      setToken(String(resp.corpo.codigo))
     } else {
       console.log(resp.mensagem)
       Snackbar.show({
@@ -60,32 +58,24 @@ export function Login() {
 
   return (
     <Layout style={styles.container}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.logoContainer}>
-          <Image source={require('../../assets/Car.png')} resizeMode={'contain'} style={styles.logo} />
-        </View>
-        <KeyboardAvoidingView style={styles.formContainer}>
-          <Input
-            style={styles.input}
-            placeholder={'Digite seu e-mail'}
-            value={email}
-            caption={() => <Text style={{ color: 'white' }}>{emailCaption}</Text>}
-            size='large'
-            onChangeText={text => setEmail(text)}
-          />
-          <Input
-            style={styles.input} placeholder={'Digite sua senha'}
-            value={password}
-            caption={() => <Text style={{ color: 'white' }}>{passwordCaption}</Text>}
-            size='large' onChangeText={text => setPassword(text)}
-            accessoryRight={renderIcon} secureTextEntry={secureTextEntry}
-          />
-          <Button style={styles.loginButton} appearance='outline' status='control' size='large' onPress={onClickLogin}>ENTRAR</Button>
-        </KeyboardAvoidingView>
-        <View style={styles.registerContainer}>
-          <Button appearance='ghost' status='control' onPress={() => navigation.navigate('SignUp')}>Cadastre-se</Button>
-        </View>
-      </ScrollView>
+      <View style={styles.logoContainer}>
+        <Image source={require('../../assets/Car.png')} resizeMode={'contain'} style={styles.logo} />
+      </View>
+      <View style={styles.formContainer}>
+        <Input
+          style={styles.input}
+          placeholder={'Digite seu e-mail'}
+          value={email}
+          caption={() => <Text style={{ color: 'white' }}>{emailCaption}</Text>}
+          size='large'
+          onChangeText={text => setEmail(text)}
+        />
+        <PasswordInput caption={passwordCaption} setValue={setPassword} value={password} isConfirmation={false} />
+        {isLoading ? <ActivityIndicator size="small" color="#ffffff" /> : <Button style={styles.loginButton} appearance='outline' status='control' size='large' onPress={onClickLogin}>ENTRAR</Button>}
+      </View>
+      <View style={styles.registerContainer}>
+        <Button appearance='ghost' status='control' onPress={() => navigation.navigate('SignUp')}>Cadastre-se</Button>
+      </View>
     </Layout>
   )
 }

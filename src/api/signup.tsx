@@ -10,6 +10,7 @@ export const signUp = async (name: string, email: string, password: string) => {
             "emailUsuario": email,
             "senhaUsuario": password,
             "nomeUsuario": name,
+            "perfilUsuario": "LOCADOR",
         }),
     })
         .then(response => {
