@@ -18,7 +18,7 @@ export function CarCard({ id, model, image, onPressFunction }: Props) {
   }
 
   return (
-    <View style={styles.card} >
+    <View style={styles.card}>
       <TouchableOpacity style={styles.touchable} onPress={() => onPressFunction(id)}>
         <Image style={styles.image} source={imageSource()} resizeMode='cover' borderTopLeftRadius={18} borderTopRightRadius={18} accessibilityLabel={'Imagem do carro'} />
         <Text style={styles.title} category='h5' numberOfLines={1}>{model}</Text>

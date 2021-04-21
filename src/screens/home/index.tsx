@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { Icon, Input, Layout } from '@ui-kitten/components'
+import { Icon, Input, Layout, Text } from '@ui-kitten/components'
 import { styles } from './styles'
-import { RefreshControl, ScrollView } from 'react-native';
+import { RefreshControl, ScrollView, View } from 'react-native';
 import { CarCard } from '../../components/CarCard';
 import { searchCars } from '../../api/searchCars';
 import { Laoder } from '../../components/Loader';
+import { CarDetail } from '../../components/CarDetail';
 
 export function Home() {
   const [search, setSearch] = useState<string>('');
   const [cars, setCars] = useState([]);
+  const [selectedCar, setSelectedCar] = useState()
+  const [visible, setVisible] = useState<boolean>(false)
   const [renderedCars, setRenderedCars] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [refreshing, setRefreshing] = React.useState<boolean>(false);
@@ -30,9 +33,20 @@ export function Home() {
   }
 
   const renderCars = () => {
-    if (cars) {
-      setRenderedCars(cars.map((car: any) => <CarCard key={'car' + car.codigo} id={car.codigo} model={car.modelo} image={car.imagem} onPressFunction={(id: any) => console.log(`id`, id)} />))
+    if (cars && cars.length > 0) {
+      setRenderedCars(cars.map((car: any) => <CarCard key={'car' + car.codigo} id={car.codigo} model={car.modelo} image={car.imagem} onPressFunction={() => onClickCar(car)} />))
+    } else {
+      setRenderedCars(
+        <View style={styles.noCarsView}>
+          <Text style={styles.noCarsText} category='h5'>Nenhum Carro</Text>
+        </View>
+      )
     }
+  }
+
+  const onClickCar = (car: any) => {
+    setSelectedCar(car)
+    setVisible(true)
   }
 
   const onRefresh = React.useCallback(async () => {
@@ -53,6 +67,7 @@ export function Home() {
       }>
         {loading && !refreshing ? <Laoder /> : renderedCars}
       </ScrollView>
+      <CarDetail visible={visible} setVisible={() => setVisible(false)} car={selectedCar} />
     </Layout>
   )
 }

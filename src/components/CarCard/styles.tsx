@@ -5,16 +5,16 @@ export const styles = StyleSheet.create({
         width: 171,
         height: 171,
         borderColor: '#C8004C',
-        borderWidth: 1,
+        borderWidth: 2,
         borderRadius: 20,
-        margin: 10
+        margin: 10,
     },
     touchable: {
         width: '100%',
         height: '100%',
     },
     image: {
-        width: '99.66%',
+        width: '100.05%',
         height: '70%',
     },
     title: {

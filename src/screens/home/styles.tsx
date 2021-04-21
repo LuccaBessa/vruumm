@@ -3,8 +3,8 @@ import { StyleSheet } from 'react-native'
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: '100%',
     width: '100%',
+    height: '100%',
     paddingVertical: 20
   },
   searchInput: {
@@ -24,7 +24,16 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   loading: {
-    height: '100%',
     width: '100%',
+    height: '100%',
+  },
+  noCarsView: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  noCarsText: {
+    color: '#c8004c'
   }
 })
