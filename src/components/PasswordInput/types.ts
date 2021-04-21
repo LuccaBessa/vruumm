@@ -3,4 +3,6 @@ export type Props = {
   setValue: Function
   caption: string
   isConfirmation: boolean
+  onSubmitEditing: Function | undefined
+  returnKeyGo: boolean
 }

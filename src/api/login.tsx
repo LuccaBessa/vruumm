@@ -8,7 +8,8 @@ export const login = async (email: string, password: string) => {
         },
         body: JSON.stringify({
             "emailUsuario": email,
-            "senhaUsuario": password
+            "senhaUsuario": password,
+            "perfilUsuario": "LOCATARIO"
         }),
     })
         .then(response => {

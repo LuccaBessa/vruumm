@@ -4,10 +4,10 @@ import * as eva from '@eva-design/eva'
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components'
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
 import 'react-native-gesture-handler';
-import { Routes } from './Routes'
-import { ThemeContext } from './Context/theme';
+import { Routes } from './routes'
+import { ThemeContext } from './context/theme';
 import { default as customTheme } from '../custom-theme.json'
-import { ContextProvider } from './Context'
+import { ContextProvider } from './context'
 
 const App = () => {
   const [theme, setTheme] = React.useState({ ...eva.light, ...customTheme });

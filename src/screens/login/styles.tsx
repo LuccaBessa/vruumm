@@ -2,35 +2,34 @@ import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
   container: {
-    display: 'flex',
     flex: 1,
+    backgroundColor: '#c8004c',
     height: '100%',
     width: '100%',
-    padding: 20,
-    backgroundColor: '#c8004c'
+    padding: 20
   },
   logoContainer: {
     height: '40%',
     // backgroundColor: 'yellow',
     flexDirection: 'column',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center'
   },
   logo: {
-    height: 180,
-    width: 180,
+    height: 200,
+    width: 200,
   },
   formContainer: {
-    height: '40%',
     // backgroundColor: 'blue',
+    height: '50%',
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingBottom: 20
   },
   input: {
     width: '100%',
     borderRadius: 50,
-    marginBottom: 20,
   },
   loginButton: {
     width: '50%',
@@ -38,8 +37,8 @@ export const styles = StyleSheet.create({
     borderColor: 'white'
   },
   registerContainer: {
-    height: '20%',
     // backgroundColor: 'green',
+    height: '10%',
     flexDirection: 'column',
     justifyContent: 'flex-end'
   }

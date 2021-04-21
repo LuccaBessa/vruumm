@@ -1,3 +1,5 @@
 export * from './login'
 export * from './signup'
-export * from './main'
+export * from './home'
+export * from './rents'
+export * from './profile'

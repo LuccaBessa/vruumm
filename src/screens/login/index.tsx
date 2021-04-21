@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { ActivityIndicator, Image, View } from 'react-native'
 import { Button, Input, Layout } from '@ui-kitten/components'
 import { styles } from './styles'
@@ -7,7 +7,7 @@ import { login } from '../../api/login'
 import Snackbar from 'react-native-snackbar'
 import { Text } from 'react-native'
 import { PasswordInput } from '../../components/PasswordInput'
-import { useTokenContext } from '../../Context/token'
+import { useTokenContext } from '../../context/token'
 
 export function Login() {
   const [email, setEmail] = useState<string>('')
@@ -17,6 +17,7 @@ export function Login() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const navigation = useNavigation()
   const { setToken } = useTokenContext()
+  const passwordInput = useRef<Input>(null);
 
   const onClickLogin = async () => {
     let flag: boolean = false
@@ -54,21 +55,18 @@ export function Login() {
     }
   }
 
+  const focusOnNext = useCallback(() => {
+    passwordInput.current?.focus();
+  }, []);
+
   return (
     <Layout style={styles.container}>
       <View style={styles.logoContainer}>
         <Image source={require('../../assets/Car.png')} resizeMode={'contain'} style={styles.logo} />
       </View>
       <View style={styles.formContainer}>
-        <Input
-          style={styles.input}
-          placeholder={'Digite seu e-mail'}
-          value={email}
-          caption={() => <Text style={{ color: 'white' }}>{emailCaption}</Text>}
-          size='large'
-          onChangeText={text => setEmail(text)}
-        />
-        <PasswordInput caption={passwordCaption} setValue={setPassword} value={password} isConfirmation={false} />
+        <Input style={styles.input} placeholder={'Digite seu e-mail'} value={email} keyboardType='email-address' autoCompleteType='email' autoCapitalize='none' caption={() => <Text style={{ color: 'white' }}>{emailCaption}</Text>} size='large' onChangeText={text => setEmail(text)} onSubmitEditing={() => focusOnNext()} />
+        <PasswordInput ref={passwordInput} caption={passwordCaption} setValue={setPassword} value={password} isConfirmation={false} onSubmitEditing={onClickLogin} returnKeyGo={true} />
         {isLoading ? <ActivityIndicator size="small" color="#ffffff" /> : <Button style={styles.loginButton} appearance='outline' status='control' size='large' onPress={onClickLogin}>ENTRAR</Button>}
       </View>
       <View style={styles.registerContainer}>

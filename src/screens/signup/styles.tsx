@@ -2,50 +2,40 @@ import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
   container: {
-    display: 'flex',
     flex: 1,
-    height: '100%',
-    width: '100%',
-    backgroundColor: '#c8004c'
-  },
-  scroll: {
+    backgroundColor: '#c8004c',
     height: '100%',
     width: '100%',
   },
   scrollContainer: {
     height: '100%',
     width: '100%',
-    padding: 20
   },
   logoContainer: {
+    // backgroundColor: 'yellow',
     height: '30%',
     flexDirection: 'column',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center'
   },
   logo: {
-    height: '80%',
-    width: '80%',
+    height: 200,
+    width: 200,
   },
   formContainer: {
+    // backgroundColor: 'blue',
     height: '70%',
+    padding: 20,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center'
   },
   input: {
     borderRadius: 50,
-    marginBottom: 20,
   },
   signUpButton: {
     width: '50%',
     borderRadius: 50,
     borderColor: 'white'
-  },
-  registerContainer: {
-    height: '20%',
-    backgroundColor: 'green',
-    flexDirection: 'column',
-    justifyContent: 'flex-end'
   }
 })
