@@ -7,7 +7,7 @@ import { useTokenContext } from '../../context/token'
 import { Laoder } from '../../components/Loader'
 import { getProfile } from '../../api/getProfile'
 
-export function Profile() {
+export function EditProfile() {
   const { tokenState } = useTokenContext()
   const [loading, setLoading] = useState<boolean>(false);
   const [profile, setProfile] = useState<any>();
