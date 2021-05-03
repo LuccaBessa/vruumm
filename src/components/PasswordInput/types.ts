@@ -5,4 +5,5 @@ export type Props = {
   isConfirmation: boolean
   onSubmitEditing: Function | undefined
   returnKeyGo: boolean
+  isNew: boolean
 }

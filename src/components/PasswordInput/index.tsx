@@ -5,7 +5,7 @@ import { styles } from './styles';
 import { Props } from './types';
 import { forwardRef } from 'react';
 
-export const PasswordInput = forwardRef(({ caption, setValue, value, isConfirmation, onSubmitEditing, returnKeyGo }: Props, ref: any) => {
+export const PasswordInput = forwardRef(({ caption, setValue, value, isConfirmation, onSubmitEditing, returnKeyGo, isNew }: Props, ref: any) => {
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
 
   const toggleSecureEntry = () => {
@@ -18,10 +18,19 @@ export const PasswordInput = forwardRef(({ caption, setValue, value, isConfirmat
     </TouchableWithoutFeedback>
   );
 
+  const setPlaceholder = () => {
+    if (isConfirmation) {
+      return isNew ? 'Confirme sua nova senha' : 'Confirme sua senha*'
+    } else {
+      return isNew ? 'Digite sua nova senha' : 'Digite sua senha*'
+    }
+  }
+
   return (
     <Input
       ref={ref}
-      style={styles.input} placeholder={isConfirmation ? 'Confirme sua senha' : 'Digite sua senha'}
+      style={styles.input}
+      placeholder={setPlaceholder()}
       value={value}
       caption={() => <Text style={{ color: 'white' }}>{caption}</Text>}
       size='large'

@@ -95,7 +95,7 @@ export function SignUp() {
         <Input
           style={styles.input}
           size='large'
-          placeholder={'Digite seu nome'}
+          placeholder={'Digite seu nome*'}
           value={name} caption={() => <Text style={{ color: 'white' }}>{nameCaption}</Text>}
           onChangeText={text => setName(text)}
           onSubmitEditing={() => focusOnNext(emailInput)}
@@ -104,14 +104,14 @@ export function SignUp() {
           ref={emailInput}
           style={styles.input}
           size='large'
-          placeholder={'Digite seu e-mail'}
+          placeholder={'Digite seu e-mail*'}
           value={email}
           caption={() => <Text style={{ color: 'white' }}>{emailCaption}</Text>}
           onChangeText={text => setEmail(text)}
           onSubmitEditing={() => focusOnNext(passwordInput)}
         />
-        <PasswordInput ref={passwordInput} caption={passwordCaption} isConfirmation={false} setValue={setPassword} value={password} onSubmitEditing={() => focusOnNext(confirmationInput)} returnKeyGo={false} />
-        <PasswordInput ref={confirmationInput} caption={passwordConfirmationCaption} isConfirmation={true} setValue={setPasswordConfirmation} value={passwordConfirmation} onSubmitEditing={onClickSignUp} returnKeyGo={true} />
+        <PasswordInput ref={passwordInput} caption={passwordCaption} isConfirmation={false} setValue={setPassword} value={password} onSubmitEditing={() => focusOnNext(confirmationInput)} returnKeyGo={false} isNew={false} />
+        <PasswordInput ref={confirmationInput} caption={passwordConfirmationCaption} isConfirmation={true} setValue={setPasswordConfirmation} value={passwordConfirmation} onSubmitEditing={onClickSignUp} returnKeyGo={true} isNew={false} />
         {isLoading ? <ActivityIndicator size="small" color="#ffffff" /> : <Button style={styles.signUpButton} appearance='outline' status='control' onPress={onClickSignUp}>Cadastrar</Button>}
       </View>
     </KeyboardAwareScrollView>

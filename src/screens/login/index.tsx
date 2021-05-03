@@ -66,7 +66,7 @@ export function Login() {
       </View>
       <View style={styles.formContainer}>
         <Input style={styles.input} placeholder={'Digite seu e-mail'} value={email} keyboardType='email-address' autoCompleteType='email' autoCapitalize='none' caption={() => <Text style={{ color: 'white' }}>{emailCaption}</Text>} size='large' onChangeText={text => setEmail(text)} onSubmitEditing={() => focusOnNext()} />
-        <PasswordInput ref={passwordInput} caption={passwordCaption} setValue={setPassword} value={password} isConfirmation={false} onSubmitEditing={onClickLogin} returnKeyGo={true} />
+        <PasswordInput ref={passwordInput} caption={passwordCaption} setValue={setPassword} value={password} isConfirmation={false} onSubmitEditing={onClickLogin} returnKeyGo={true} isNew={false} />
         {isLoading ? <ActivityIndicator size="small" color="#ffffff" /> : <Button style={styles.loginButton} appearance='outline' status='control' size='large' onPress={onClickLogin}>ENTRAR</Button>}
       </View>
       <View style={styles.registerContainer}>

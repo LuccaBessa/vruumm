@@ -6,24 +6,39 @@ import { ProfileHeader } from '../../components/ProfileHeader'
 import { useTokenContext } from '../../context/token'
 import { Laoder } from '../../components/Loader'
 import { getProfile } from '../../api/getProfile'
+import { useNavigation } from '@react-navigation/native'
+import { getRentsSummary } from '../../api/getRentsSummary'
 
 export function Profile() {
   const { tokenState } = useTokenContext()
   const [loading, setLoading] = useState<boolean>(false);
   const [profile, setProfile] = useState<any>();
+  const [rentsPending, setRentsPending] = useState<number>();
+  const [rentsInProgress, setRentsInProgress] = useState<number>();
+  const [rentsDone, setRentsDone] = useState<number>();
+  const navigation = useNavigation();
 
   useEffect(() => {
-    loadProfile()
+    navigation.addListener('focus', () => loadProfile())
   }, [])
 
   const loadProfile = async () => {
-    let resp
+    let resp, resp1
+
     setLoading(true)
     if (tokenState?.token) {
       resp = await getProfile(tokenState?.token)
+      resp1 = await getRentsSummary(tokenState?.token)
     }
     setProfile(resp.corpo)
+    setRentsPending(resp1.corpo.quantidadeDeAlugueisPendentes)
+    setRentsInProgress(resp1.corpo.quantidadeDeAlugueisEmAndamento)
+    setRentsDone(resp1.corpo.quantidadeDeAlugueisFinalizados)
     setLoading(false)
+  }
+
+  const editProfile = () => {
+    navigation.navigate('EditProfile', { profile: profile })
   }
 
   return (
@@ -36,21 +51,21 @@ export function Profile() {
               <Image style={styles.avatar} borderRadius={100} resizeMode='contain' source={require('../../assets/profile.png')} />
               <View style={styles.rentInfo}>
                 <View>
-                  <Text style={styles.rentNumberText} >0</Text>
+                  <Text style={styles.rentNumberText} >{rentsPending}</Text>
                   <Text style={styles.rentText}>Pendentes</Text>
                 </View>
                 <View>
-                  <Text style={styles.rentNumberText}>0</Text>
+                  <Text style={styles.rentNumberText}>{rentsInProgress}</Text>
                   <Text style={styles.rentText}>Em Andamento</Text>
                 </View>
                 <View>
-                  <Text style={styles.rentNumberText}>0</Text>
+                  <Text style={styles.rentNumberText}>{rentsDone}</Text>
                   <Text style={styles.rentText}>Concluídos</Text>
                 </View>
               </View>
             </View>
             <Text style={styles.emailText}>Email: {profile?.email ? profile?.email : 'Não Cadastrado'}</Text>
-            <TouchableOpacity style={styles.edit} onPress={() => null}>
+            <TouchableOpacity style={styles.edit} onPress={editProfile}>
               <Text style={styles.editText}>Editar Perfil</Text>
             </TouchableOpacity>
             <View style={styles.personalInfo}>

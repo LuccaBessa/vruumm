@@ -10,8 +10,9 @@ import { SplashScreen } from './components/SplashScreen';
 
 
 export function Routes() {
-  const Stack = createStackNavigator();
-  const Tab = createBottomTabNavigator()
+  const MainStack = createStackNavigator()
+  const ProfileStack = createStackNavigator()
+  const BottomTab = createBottomTabNavigator()
   const { tokenState, setToken } = useTokenContext()
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -20,7 +21,7 @@ export function Routes() {
   }, [])
 
   const getToken = async () => {
-    await AsyncStorage.getItem("token", (err, result) => {
+    await AsyncStorage.getItem("token", (err: any, result: any) => {
       if (!err) {
         setToken(result ? result : "");
         setLoading(false)
@@ -30,24 +31,33 @@ export function Routes() {
     });
   };
 
+  const ProfileRoute = () => {
+    return (
+      <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
+        <ProfileStack.Screen name="Profile" component={Profile} />
+        <ProfileStack.Screen name="EditProfile" component={EditProfile} />
+      </ProfileStack.Navigator>
+    );
+  }
+
   const handleScreen = () => {
     if (loading) {
       return <SplashScreen />
     } else {
       if (!tokenState?.token || tokenState?.token == "") {
         return (
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="SignUp" component={SignUp} />
-          </Stack.Navigator>
+          <MainStack.Navigator screenOptions={{ headerShown: false }}>
+            <MainStack.Screen name="Login" component={Login} />
+            <MainStack.Screen name="SignUp" component={SignUp} />
+          </MainStack.Navigator>
         );
       } else {
         return (
-          <Tab.Navigator tabBar={(props: any) => <BottomTapNavigator {...props} />}>
-            <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="Rents" component={Rents} />
-            <Tab.Screen name="ProfileRoute" component={ProfileRoutes} />
-          </Tab.Navigator>
+          <BottomTab.Navigator tabBar={(props: any) => <BottomTapNavigator {...props} />}>
+            <BottomTab.Screen name="Home" component={Home} />
+            <BottomTab.Screen name="Rents" component={Rents} />
+            <BottomTab.Screen name="ProfileRoute" component={ProfileRoute} />
+          </BottomTab.Navigator>
         );
       }
     }
@@ -60,15 +70,3 @@ export function Routes() {
   );
 }
 
-function ProfileRoutes() {
-  const Stack = createStackNavigator();
-
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="EditProfile" component={EditProfile} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
