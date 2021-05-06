@@ -8,10 +8,11 @@ import { Laoder } from '../../components/Loader'
 import { getProfile } from '../../api/getProfile'
 import { useNavigation } from '@react-navigation/native'
 import { getRentsSummary } from '../../api/getRentsSummary'
+import { cepMask, cpfMask, phoneMask } from '../../utils/masks'
 
 export function Profile() {
   const { tokenState } = useTokenContext()
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [profile, setProfile] = useState<any>();
   const [rentsPending, setRentsPending] = useState<number>();
   const [rentsInProgress, setRentsInProgress] = useState<number>();
@@ -19,6 +20,7 @@ export function Profile() {
   const navigation = useNavigation();
 
   useEffect(() => {
+    setLoading(true)
     navigation.addListener('focus', () => loadProfile())
   }, [])
 
@@ -70,18 +72,18 @@ export function Profile() {
             </TouchableOpacity>
             <View style={styles.personalInfo}>
               <Text style={styles.infoTitle}>Informações Pessoais</Text>
-              <Text style={styles.personalInfoText}>CPF: {profile?.cpf ? profile?.cpf : 'Não Cadastrado'}</Text>
-              <Text style={styles.personalInfoText}>Telefone: {profile?.numeroTelefone ? profile?.numeroTelefone : 'Não Cadastrado'}</Text>
+              <Text style={styles.personalInfoText}>CPF: {profile?.cpf ? cpfMask(profile?.cpf) : 'Não Cadastrado'}</Text>
+              <Text style={styles.personalInfoText}>Telefone: {profile?.numeroTelefone ? phoneMask(profile?.numeroTelefone) : 'Não Cadastrado'}</Text>
             </View>
             <View style={styles.addressInfo}>
               <Text style={styles.infoTitle}>Endereço</Text>
               <View style={styles.addressGrid}>
-                <Text style={styles.addressInfoText}>CEP: {profile?.endereco?.cep ? profile?.endereco?.cep : 'Não Cadastrado'}</Text>
+                <Text style={styles.addressInfoText}>CEP: {profile?.endereco?.cep ? cepMask(profile?.endereco?.cep) : 'Não Cadastrado'}</Text>
                 <Text style={styles.addressInfoText}>Logradouro: {profile?.endereco?.logradouro ? profile?.endereco?.logradouro : 'Não Cadastrado'}</Text>
                 <Text style={styles.addressInfoText}>Número: {profile?.endereco?.numero ? profile?.endereco?.numero : 'Não Cadastrado'}</Text>
                 <Text style={styles.addressInfoText}>Complemento: {profile?.endereco?.complemento ? profile?.endereco?.complemento : 'Não Cadastrado'}</Text>
                 <Text style={styles.addressInfoText}>Bairro: {profile?.endereco?.bairro ? profile?.endereco?.bairro : 'Não Cadastrado'}</Text>
-                <Text style={styles.addressInfoText}>Cidade: {profile?.endereco?.uf ? profile?.endereco?.uf : 'Não Cadastrado'}</Text>
+                <Text style={styles.addressInfoText}>Cidade: {profile?.endereco?.localidade ? profile?.endereco?.localidade : 'Não Cadastrado'}</Text>
                 <Text style={styles.addressInfoText}>UF: {profile?.endereco?.uf ? profile?.endereco?.uf : 'Não Cadastrado'}</Text>
               </View>
             </View>

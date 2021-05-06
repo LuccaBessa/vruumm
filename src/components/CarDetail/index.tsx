@@ -1,12 +1,12 @@
+import { useNavigation } from '@react-navigation/native'
 import { Button, Divider, Icon, Modal, Text } from '@ui-kitten/components'
-import React, { useState } from 'react'
+import React from 'react'
 import { Image, ScrollView, TouchableOpacity, View } from 'react-native'
-import { RentModal } from '../RentModal'
 import { styles } from './styles'
 import { Props } from './types'
 
 export function CarDetail({ visible, setVisible, car }: Props) {
-  const [vmodal, setVmodal] = useState<boolean>(false)
+  const navigation = useNavigation()
 
   const imageSource = () => {
     if (car?.imagem) {
@@ -38,20 +38,19 @@ export function CarDetail({ visible, setVisible, car }: Props) {
             <Text>Placa: {car?.placa}</Text>
           </View>
           <View style={styles.row}>
-            <Text>Ano: {car?.ano}</Text>
+            <Text>Ano: {car?.ano ? car?.ano : 'Não cadastrado'}</Text>
             <Text>Assentos: {car?.numeroDeAssentos}</Text>
           </View>
           <View style={styles.row}>
-            <Text>Cor: {car?.cor}</Text>
+            <Text>Cor: {car?.cor ? car?.cor : 'Não cadastrado'}</Text>
           </View>
           <View style={styles.description}>
-            <Text>Descrição:</Text>
-            <Text>{car?.descricao}</Text>
+            <Text style={{ marginBottom: 5 }}>Descrição:</Text>
+            <Text>{!car?.descricao ? 'Sem descriçao' : car?.descricao}</Text>
           </View>
         </ScrollView>
-        <Button style={styles.rentButton} onPress={() => setVmodal(true)}>Alugar</Button>
+        <Button style={styles.rentButton} onPress={() => { setVisible(false); navigation.navigate('RequestRent', { car: car }) }}>Alugar</Button>
       </View>
-      <RentModal id={car?.codigo} closeModal={setVisible} visible={vmodal} setVisible={setVmodal} price={car?.precoDaDiaria} />
     </Modal>
   )
 }

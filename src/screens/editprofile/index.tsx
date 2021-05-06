@@ -24,6 +24,7 @@ export function EditProfile({ route }: Props) {
   const [numeroEndereco, setNumeroEndereco] = useState<string>()
   const [complementoEndereco, setComplementoEndereco] = useState<string>()
   const [bairroEndereco, setBairroEndereco] = useState<string>()
+  const [localidadeEndereco, setLocalidadeEndereco] = useState<string>();
   const [ufEndereco, setUfEndereco] = useState<string>();
   const scroll = useRef<KeyboardAwareScrollView>(null)
   const nameInput = useRef<Input>(null)
@@ -37,6 +38,7 @@ export function EditProfile({ route }: Props) {
   const addressComplementInput = useRef<Input>(null)
   const addressStreetInput = useRef<Input>(null)
   const addressNeighborhoodInput = useRef<Input>(null)
+  const addressCityInput = useRef<Input>(null)
   const addressStateInput = useRef<Input>(null)
   const navigation = useNavigation()
 
@@ -82,6 +84,7 @@ export function EditProfile({ route }: Props) {
       if (profile.endereco.complemento != complementoEndereco) body = { ...body, "complementoEndereco": complementoEndereco }
       if (profile.endereco.logradouro != logradouroEndereco) body = { ...body, "logradouroEndereco": logradouroEndereco }
       if (profile.endereco.bairro != bairroEndereco) body = { ...body, "bairroEndereco": bairroEndereco }
+      if (profile.endereco.localidade != localidadeEndereco) body = { ...body, "localidadeEndereco": localidadeEndereco }
       if (profile.endereco.uf != ufEndereco) body = { ...body, "ufEndereco": ufEndereco }
 
       let resp = await updateProfile(profile.codigo, body)
@@ -102,7 +105,7 @@ export function EditProfile({ route }: Props) {
 
   const focusOnCep = () => {
     focusOnNext(cepInput)
-    scroll.current?.scrollToEnd(true);
+    scroll.current?.scrollToEnd(true)
   }
 
   const confirmCep = async () => {
@@ -118,6 +121,7 @@ export function EditProfile({ route }: Props) {
       } else {
         setLogradouroEndereco(resp.logradouro)
         setBairroEndereco(resp.bairro)
+        setLocalidadeEndereco(resp.localidade)
         setUfEndereco(resp.uf)
         focusOnNext(addressNumberInput)
       }
@@ -148,6 +152,7 @@ export function EditProfile({ route }: Props) {
         <Input ref={addressComplementInput} style={styles.input} placeholder={'Complemento'} size='large' value={complementoEndereco} onChangeText={(text: string) => setComplementoEndereco(text)} onSubmitEditing={() => focusOnNext(nameInput)} />
         <Input ref={addressStreetInput} style={styles.input} placeholder={'Logradouro*'} size='large' disabled={true} value={logradouroEndereco} />
         <Input ref={addressNeighborhoodInput} style={styles.input} placeholder={'Bairro*'} size='large' disabled={true} value={bairroEndereco} />
+        <Input ref={addressCityInput} style={styles.input} placeholder={'Cidade*'} size='large' disabled={true} value={localidadeEndereco} />
         <Input ref={addressStateInput} style={styles.input} placeholder={'UF*'} size='large' disabled={true} value={ufEndereco} />
       </KeyboardAwareScrollView>
     </Layout >

@@ -1,33 +1,49 @@
-import { Dimensions, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    width: Dimensions.get('screen').width * 0.9,
-    height: Dimensions.get('screen').height * 0.7,
-    borderRadius: 20,
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
     padding: 10
   },
-  backdrop: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  info: {
+    width: '100%',
+    height: '15%',
   },
   title: {
-    textAlign: 'center',
-    paddingHorizontal: 5,
+    fontWeight: 'bold',
+    fontSize: 25,
     color: '#c8004c'
   },
+  infoText: {
+    fontSize: 20
+  },
+  divider: {
+    marginVertical: 5
+  },
+  subtitle: {
+    textAlign: 'center',
+    paddingHorizontal: 5,
+    fontSize: 25,
+    color: '#c8004c'
+  },
+  calendar: {
+    width: '100%',
+    height: '55%',
+  },
   total: {
+    width: '100%',
     paddingHorizontal: 5,
     paddingVertical: 10,
     color: '#c8004c'
   },
-  row: {
+  footer: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginVertical: 10
+    marginVertical: 10,
   },
   cancelButton: {
     width: '45%',

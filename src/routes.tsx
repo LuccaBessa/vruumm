@@ -7,10 +7,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTokenContext } from './context/token';
 import { BottomTapNavigator } from './components/BottomTapNavigator';
 import { SplashScreen } from './components/SplashScreen';
-
+import { RequestRent } from './screens/requestrent';
 
 export function Routes() {
   const MainStack = createStackNavigator()
+  const HomeStack = createStackNavigator()
   const ProfileStack = createStackNavigator()
   const BottomTab = createBottomTabNavigator()
   const { tokenState, setToken } = useTokenContext()
@@ -40,6 +41,15 @@ export function Routes() {
     );
   }
 
+  const HomeRoute = () => {
+    return (
+      <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+        <HomeStack.Screen name="Home" component={Home} />
+        <HomeStack.Screen name="RequestRent" component={RequestRent} />
+      </HomeStack.Navigator>
+    );
+  }
+
   const handleScreen = () => {
     if (loading) {
       return <SplashScreen />
@@ -54,7 +64,7 @@ export function Routes() {
       } else {
         return (
           <BottomTab.Navigator tabBar={(props: any) => <BottomTapNavigator {...props} />}>
-            <BottomTab.Screen name="Home" component={Home} />
+            <BottomTab.Screen name="HomeRoute" component={HomeRoute} />
             <BottomTab.Screen name="Rents" component={Rents} />
             <BottomTab.Screen name="ProfileRoute" component={ProfileRoute} />
           </BottomTab.Navigator>
