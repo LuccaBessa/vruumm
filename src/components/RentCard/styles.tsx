@@ -32,7 +32,7 @@ export const styles = (status: string) => {
     flag: {
       backgroundColor: flagColor,
       height: '20%',
-      width: '35%',
+      width: status == 'em_andamento' ? '45%' : '35%',
       padding: 10,
       marginTop: 5,
       borderRadius: 50,
