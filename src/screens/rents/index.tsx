@@ -42,7 +42,7 @@ export function Rents() {
           <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContainer} refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#c8004c']} />
           }>
-            {rents.map(rent => <RentCard key={rent?.codigo} model={rent?.carroAlugado.modelo} startDate={new Date(rent?.dataInicioReserva)} endDate={new Date(rent?.dataFimReserva)} owner={rent?.usuarioLocatario.nome} phone={rent?.usuarioLocatario.numeroTelefone} totalPrice={rent?.precoTotal} status={rent?.situacao} />)}
+            {rents.map(rent => <RentCard key={rent?.codigo} model={rent?.carroAlugado.modelo} startDate={new Date(rent?.dataInicioReserva)} endDate={new Date(rent?.dataFimReserva)} owner={rent?.usuarioLocador.nome} phone={rent?.usuarioLocador.numeroTelefone} totalPrice={rent?.precoTotal} status={rent?.situacao} />)}
           </ScrollView>
           : <Text>Nenhum aluguel encontrado</Text>
       }
