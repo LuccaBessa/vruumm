@@ -5,8 +5,15 @@ export const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    alignItems: 'center',
     padding: 10
+  },
+  scroll: {
+    flex: 1,
+  },
+  scrollContainer: {
+    flexDirection: 'column',
+    flexGrow: 1,
+    justifyContent: 'flex-start'
   },
   info: {
     width: '100%',
@@ -15,7 +22,8 @@ export const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 25,
-    color: '#c8004c'
+    color: '#c8004c',
+    textAlign: 'center'
   },
   infoText: {
     fontSize: 20
@@ -27,11 +35,16 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: 5,
     fontSize: 25,
-    color: '#c8004c'
+    color: '#c8004c',
+    padding: 10
   },
   calendar: {
     width: '100%',
     height: '55%',
+    paddingVertical: 10
+  },
+  footer: {
+    marginTop: 'auto'
   },
   total: {
     width: '100%',
@@ -39,7 +52,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
     color: '#c8004c'
   },
-  footer: {
+  footerButtons: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',

@@ -2,12 +2,12 @@ import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
     card: {
-        width: 171,
+        width: '44.5%',
         height: 171,
         borderColor: '#C8004C',
         borderWidth: 2,
         borderRadius: 20,
-        margin: 10,
+        margin: 5,
     },
     touchable: {
         width: '100%',

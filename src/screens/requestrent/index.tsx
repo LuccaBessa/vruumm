@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import { Button, Divider, Layout, RangeCalendar, Spinner, Text, TopNavigation } from '@ui-kitten/components'
 import React, { useEffect, useState } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { ScrollView, TouchableOpacity, View } from 'react-native'
 import Snackbar from 'react-native-snackbar'
 import { rentCar } from '../../api/rentCar'
 import { useTokenContext } from '../../context/token'
@@ -49,27 +49,31 @@ export function RequestRent({ route }: Props) {
   return (
     <Layout style={styles.container}>
       <TopNavigation
-        title={() => <Text style={styles.title}>Confirmar solicitação de aluguel</Text>}
+        title={() => <Text adjustsFontSizeToFit={true} style={styles.title}>Confirmar solicitação de aluguel</Text>}
       />
-      <View style={styles.info}>
-        <Text style={styles.infoText}>Modelo: {route.params.car?.modelo}</Text>
-        <Text style={styles.infoText}>Marca: {route.params.car?.marca}</Text>
-        <Text style={styles.infoText}>Placa: {route.params.car?.placa}</Text>
-      </View>
-      <Divider />
-      <Text style={styles.subtitle} category='h4'>Período de aluguel</Text>
-      <RangeCalendar style={styles.calendar} range={range} onSelect={nextRange => setRange(nextRange)} />
-      <Text style={styles.total} category='h5'>{total}</Text>
-      <View style={styles.footer}>
-        {loading ? <Spinner size='large' /> :
-          <>
-            <TouchableOpacity style={styles.cancelButton} onPress={() => { setRange({}); navigation.goBack() }}>
-              <Text style={styles.cancelText}>Cancelar</Text>
-            </TouchableOpacity>
-            <Button style={styles.confirmButton} onPress={onConfirm}>Confirmar</Button>
-          </>
-        }
-      </View>
+      <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.info}>
+          <Text style={styles.infoText}>Modelo: {route.params.car?.modelo}</Text>
+          <Text style={styles.infoText}>Marca: {route.params.car?.marca}</Text>
+          <Text style={styles.infoText}>Placa: {route.params.car?.placa}</Text>
+        </View>
+        <Divider />
+        <View>
+          <Text style={styles.subtitle} category='h4'>Período de aluguel</Text>
+          <RangeCalendar style={styles.calendar} range={range} onSelect={nextRange => setRange(nextRange)} />
+        </View>
+        <View style={styles.footer}>
+          <Text style={styles.total} category='h5'>{total}</Text>
+          {loading ? <Spinner size='large' /> :
+            <View style={styles.footerButtons}>
+              <TouchableOpacity style={styles.cancelButton} onPress={() => { setRange({}); navigation.goBack() }}>
+                <Text style={styles.cancelText}>Cancelar</Text>
+              </TouchableOpacity>
+              <Button style={styles.confirmButton} onPress={onConfirm}>Confirmar</Button>
+            </View>
+          }
+        </View>
+      </ScrollView>
     </Layout>
   )
 }
