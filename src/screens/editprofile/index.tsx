@@ -7,9 +7,9 @@ import { Props } from './types'
 import { Text } from 'react-native'
 import { PasswordInput } from '../../components/PasswordInput'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { getAddress } from '../../api/getAddress'
+import { getAddress } from '../../services/address.service'
 import Snackbar from 'react-native-snackbar'
-import { updateProfile } from '../../api/updateProfile'
+import { updateProfile } from '../../services/updateProfile'
 
 export function EditProfile({ route }: Props) {
   const [profile, setProfile] = useState<any>()
